@@ -1,0 +1,244 @@
+/* ==========================================================
+   LAMPSTAND — Stylesheet
+   Palette: indigo / gold / terracotta / olive
+   Type: Fraunces (display) + Archivo (body/UI)
+   ========================================================== */
+
+:root {
+  --ink: #14172a;
+  --ink-soft: #1c2040;
+  --indigo: #2c3268;
+  --gold: #d9a94e;
+  --gold-soft: #e8c988;
+  --terracotta: #c1633e;
+  --olive: #767a4f;
+  --ivory: #f4efe4;
+  --ivory-dim: rgba(244, 239, 228, 0.7);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Archivo', sans-serif;
+  background: var(--ink);
+  min-height: 140vh; /* temporary, so the nav's scroll behavior is visible before the hero exists */
+}
+
+/* ---------- Placeholder backdrop, stands in for the hero ---------- */
+.backdrop {
+  height: 100vh;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(217, 169, 78, 0.10), transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(193, 99, 62, 0.08), transparent 50%),
+    linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--ivory-dim);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================
+   Navigation
+   ========================================================== */
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem clamp(1.5rem, 5vw, 4rem);
+  background: linear-gradient(180deg, rgba(20, 23, 42, 0.85) 0%, rgba(20, 23, 42, 0) 100%);
+  backdrop-filter: blur(6px);
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ivory);
+}
+
+.logo-mark {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.logo-mark path {
+  fill: var(--gold);
+}
+
+.logo-word {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Desktop links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  list-style: none;
+}
+
+.nav-links a {
+  position: relative;
+  color: var(--ivory-dim);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding-bottom: 6px;
+  transition: color 0.3s ease;
+}
+
+/* Thread of light — signature underline treatment, ties nav back to the
+   site-wide gradient line motif without duplicating it outright */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--terracotta), var(--gold) 45%, var(--gold-soft) 70%, transparent);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--ivory);
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.nav-links a:focus-visible {
+  outline: 1px solid var(--gold-soft);
+  outline-offset: 4px;
+}
+
+/* CTA */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  background: var(--gold);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.3rem;
+  border-radius: 2px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.nav-cta:hover {
+  background: var(--gold-soft);
+  transform: translateY(-1px);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.6rem, 3vw, 3rem);
+}
+
+/* ---------- Mobile ---------- */
+.menu-toggle {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 26px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.hamburger span {
+  display: block;
+  height: 1.5px;
+  width: 100%;
+  background: var(--ivory);
+  transition: transform 0.35s ease, opacity 0.25s ease;
+}
+
+@media (max-width: 860px) {
+  .nav-links {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(78vw, 340px);
+    height: 100vh;
+    background: var(--ink-soft);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2.2rem;
+    padding: 4rem 2.5rem;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .nav-links a {
+    font-size: 1rem;
+  }
+
+  .nav-cta {
+    position: static;
+  }
+
+  .nav-right {
+    gap: 1.2rem;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .menu-toggle:checked ~ .nav-right .nav-links {
+    transform: translateX(0);
+  }
+
+  .menu-toggle:checked ~ .hamburger span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .menu-toggle:checked ~ .hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle:checked ~ .hamburger span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+}
